@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IS117 - Assignment 10</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        #cookie-display {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            padding: 20px;
+            border: 2px dashed #999;
+            border-radius: 10px;
+        }
+        footer {
+            position: absolute;
+            bottom: 20px;
+            color: #555;
+        }
+    </style>
+</head>
+<body onload="checkCookie()">
+
+    <div id="cookie-display">
+        </div>
+
+    <footer>
+        &copy; 2026 | Due: April 15, 2026 | Niya Emery
+    </footer>
+
+    <script>
+        // Standard W3Schools helper to set cookie
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays*24*60*60*1000));
+            let expires = "expires="+ d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        // Standard W3Schools helper to get cookie
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') { c = c.substring(1); }
+                if (c.indexOf(name) == 0) { return c.substring(name.length, c.length); }
+            }
+            return "";
+        }
+
+        function checkCookie() {
+            let user = getCookie("username");
+            let displayDiv = document.getElementById("cookie-display");
+
+            if (user != "") {
+                // Requirement: Cookie value displays WITHOUT input box when refreshed
+                displayDiv.innerHTML = "Stored Cookie Value: " + user;
+            } else {
+                // Requirement: Pop-up box asks for cookie entry
+                user = prompt("Please enter your name to set a cookie:", "");
+                if (user != "" && user != null) {
+                    setCookie("username", user, 30);
+                    displayDiv.innerHTML = "Cookie saved! Refresh the page to see it persist.";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
